@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Vanilla GraphQL</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    const container = document.querySelector("#shipments-container");
+    const form = document.querySelector("#book-search");
+
+    const getShipmentsQuery = (keyword) => `query { products(first: 3) { nodes { name { de } } } }`;
+
+    // const renderBooks = ({ data }) => {
+    //   const { allBooks = [] } = data;
+
+    //   while (bookContainer.firstChild) {
+    //     bookContainer.removeChild(bookContainer.firstChild);
+    //   }
+
+    //   const bookFragment = document.createDocumentFragment();
+    //   const booksList = document.createElement('ul');
+
+    //   allBooks.forEach((book) => {
+    //     const booksListItem = document.createElement('li');
+    //     const booksListLink = document.createElement('a');
+    //     booksListLink.href = book.url;
+    //     booksListLink.textContent = "Click To View";
+    //     booksListItem.textContent = `${book.title} - ${book.author}`;
+    //     booksListItem.appendChild(booksListLink);
+    //     booksList.appendChild(booksListItem);
+    //   });
+
+    //   bookFragment.appendChild(booksList);
+    //   bookContainer.appendChild(bookFragment);
+    // }
+
+    const render = ({ data }) => {
+      console.log("Received:");
+      console.log(data);
+    };
+
+    const loadBooks = (ev) => {
+      const options = {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          query: getShipmentsQuery("x")
+        })
+      };
+
+      fetch(`https://atalanda.com/graphql`, options)
+        .then(res => res.json())
+        .then(render);
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Eingehende Bestellungen - Produkte</h1>
+  <div id="shipments-container"></div>
+</body>
+
+</html>
